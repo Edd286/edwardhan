@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -32,6 +33,12 @@ jobs:
         env:
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
         run: npm run build
+      - name: Verify production build
+        run: |
+          if grep -q 'src/main.jsx' dist/index.html; then
+            echo 'dist/index.html still references dev sources — build did not run correctly'
+            exit 1
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -44,4 +51,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
