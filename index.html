@@ -5,10 +5,7 @@
       ;(function () {
         var k = 'theme'
         var s = localStorage.getItem(k)
-        var dark =
-          s === 'dark' ||
-          (s !== 'light' &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        var dark = s !== 'light'
         document.documentElement.classList.toggle('dark', dark)
         document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
       })()

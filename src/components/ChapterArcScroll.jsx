@@ -311,8 +311,7 @@ export default function ChapterArcScroll({ rows }) {
       </div>
       <HorizontalScrollRail
         targetRef={scrollerRef}
-        onInteractionEnd={() => snapToNearestCenter({ smooth: true })}
-        className="pointer-events-auto relative z-20 mt-0 flex justify-center md:mt-1"
+        className="relative z-20 mt-0 flex justify-center md:mt-1"
       />
     </div>
   )

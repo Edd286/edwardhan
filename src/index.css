@@ -34,6 +34,18 @@ html.dark,
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(113 113 122 / 0.45) transparent;
+}
+
+/* Page scrollbar: visible indicator only — not draggable (wheel/touch/keys still scroll) */
+html::-webkit-scrollbar {
+  width: 8px;
+}
+
+html::-webkit-scrollbar-track,
+html::-webkit-scrollbar-thumb {
+  pointer-events: none;
 }
 
 body {
@@ -159,6 +171,21 @@ html.dark .card-elevated-hover:hover,
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Scrollbars in modals/panels: visible but not draggable */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(113 113 122 / 0.45) transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track,
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  pointer-events: none;
+}
+
 /* Horizontal rows: native bar hidden — use HorizontalScrollRail for the visible rail */
 .row-scroll {
   scrollbar-width: none;
@@ -189,7 +216,7 @@ html.dark .card-elevated-hover:hover,
 
 .scroll-rail--revealed {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .scroll-rail--hidden {
@@ -202,8 +229,7 @@ html.dark .card-elevated-hover:hover,
   height: 3px;
   min-width: 6rem;
   border-radius: 9999px;
-  cursor: pointer;
-  touch-action: none;
+  cursor: default;
   background: linear-gradient(
     90deg,
     color-mix(in srgb, var(--color-cinema-amber) 10%, transparent),
@@ -211,11 +237,6 @@ html.dark .card-elevated-hover:hover,
     color-mix(in srgb, var(--color-cinema-amber) 10%, transparent)
   );
   box-shadow: 0 0 10px color-mix(in srgb, var(--color-cinema-amber) 18%, transparent);
-}
-
-.scroll-rail__track:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--color-cinema-amber) 70%, transparent);
-  outline-offset: 3px;
 }
 
 .scroll-rail__thumb {
@@ -233,12 +254,6 @@ html.dark .card-elevated-hover:hover,
     box-shadow 0.2s ease,
     left 0.05s linear;
   pointer-events: none;
-}
-
-.scroll-rail__thumb--dragging {
-  box-shadow:
-    0 0 16px color-mix(in srgb, var(--color-cinema-amber) 95%, transparent),
-    0 0 32px color-mix(in srgb, var(--color-cinema-amber) 55%, transparent);
 }
 
 /* TV static — full-screen grain above page content (below nav z-50) */

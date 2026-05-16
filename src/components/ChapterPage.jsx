@@ -114,7 +114,7 @@ export default function ChapterPage() {
           </ul>
           <HorizontalScrollRail
             targetRef={scrollerRef}
-            className="pointer-events-auto relative z-20 -mt-1 flex justify-center px-4 pb-0 pt-1 md:px-8"
+            className="relative z-20 -mt-1 flex justify-center px-4 pb-0 pt-1 md:px-8"
           />
         </div>
       </main>
