@@ -4,6 +4,9 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import { ThemeProvider } from './context/ThemeContext.jsx'
+import { initScrollRestoration } from './utils/scrollToSection.js'
+
+initScrollRestoration()
 
 const base = import.meta.env.BASE_URL
 const basename = base === '/' ? undefined : base.replace(/\/$/, '')

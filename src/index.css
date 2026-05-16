@@ -11,6 +11,7 @@
 }
 
 :root {
+  --site-header-offset: 4.75rem;
   --divider-core: rgb(161 161 170 / 0.55);
   --divider-hot: rgb(234 179 8 / 0.72);
   --divider-glow: rgb(250 204 21 / 0.45);
@@ -32,8 +33,14 @@ html.dark,
   --divider-glow-bleed: rgb(113 113 122 / 0.28);
 }
 
+#home,
+#work,
+#contact {
+  scroll-margin-top: var(--site-header-offset);
+}
+
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scrollbar-width: thin;
   scrollbar-color: rgb(113 113 122 / 0.45) transparent;
 }

@@ -267,22 +267,6 @@ export default function ChapterArcScroll({ rows }) {
     }
   }, [applySymmetricPadding, scheduleUpdate, snapToNearestCenter, tick])
 
-  useEffect(() => {
-    const root = scrollerRef.current
-    if (!root) return
-
-    const onWheel = (e) => {
-      const { deltaX, deltaY } = e
-      if (Math.abs(deltaY) <= Math.abs(deltaX)) return
-
-      window.scrollBy({ top: deltaY, left: 0, behavior: 'instant' })
-      e.preventDefault()
-    }
-
-    root.addEventListener('wheel', onWheel, { passive: false })
-    return () => root.removeEventListener('wheel', onWheel)
-  }, [])
-
   if (!rows.length) return null
 
   return (

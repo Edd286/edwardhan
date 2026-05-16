@@ -1,27 +1,33 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { isHomePath, scrollToSectionBelowHeader } from '../utils/scrollToSection.js'
+import {
+  consumeSkipHashScroll,
+  isHomePath,
+  scrollToHashSection,
+  scrollToTop,
+} from '../utils/scrollToSection.js'
 
-/** Scroll to top on route change; on home, align hash targets to the header divider. */
+/** Scroll on route/hash change (initial load, chapter → home). Navbar clicks scroll themselves. */
 export default function ScrollToTop() {
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    const sectionId = hash.replace(/^#/, '')
+    if (consumeSkipHashScroll()) return
 
-    if (isHomePath(pathname) && sectionId) {
-      const run = () => {
-        if (sectionId === 'home') {
-          window.scrollTo({ top: 0, behavior: 'instant' })
-        } else {
-          scrollToSectionBelowHeader(sectionId, { behavior: 'instant' })
-        }
-      }
-      requestAnimationFrame(() => requestAnimationFrame(run))
+    if (!isHomePath(pathname)) {
+      scrollToTop({ behavior: 'instant' })
       return
     }
 
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    const sectionId = hash.replace(/^#/, '')
+    requestAnimationFrame(() => {
+      const scrollOpts = { behavior: 'smooth', waitForLayout: true }
+      if (!sectionId || sectionId === 'home') {
+        scrollToTop(scrollOpts)
+      } else {
+        scrollToHashSection(sectionId, scrollOpts)
+      }
+    })
   }, [pathname, hash])
 
   return null

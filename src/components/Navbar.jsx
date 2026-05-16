@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ThemeToggle from './ThemeToggle.jsx'
 import { LoadReveal } from './LoadReveal.jsx'
 import { siteNav } from '../data/portfolioData.js'
 import { appRootWithHash } from '../utils/appHref.js'
-import { handleHomeHashNavClick } from '../utils/scrollToSection.js'
+import { navigateToHashSection } from '../utils/scrollToSection.js'
+
+const MOBILE_NAV_CLOSE_MS = 320
 
 export default function Navbar() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -33,8 +36,25 @@ export default function Navbar() {
   }
 
   function onNavClick(e, href) {
-    handleHomeHashNavClick(e, navHref(href), pathname)
+    if (!href.startsWith('#')) return
+
+    e.preventDefault()
+    const sectionId = href.slice(1)
+    const targetHash = `#${sectionId}`
+    const wasOpen = open
     setOpen(false)
+
+    const go = () => {
+      navigateToHashSection(e, sectionId, pathname, navigate, hash, {
+        waitForLayout: wasOpen,
+      })
+    }
+
+    if (wasOpen) {
+      window.setTimeout(go, MOBILE_NAV_CLOSE_MS)
+    } else {
+      go()
+    }
   }
 
   return (
@@ -93,6 +113,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
             className="divider-t bg-white dark:bg-zinc-950 md:hidden"
           >
             <ul className="flex flex-col px-4 py-2">

@@ -6,18 +6,19 @@ import TypewriterText from './TypewriterText.jsx'
 import { heroContent, contactContent } from '../data/portfolioData.js'
 import { appRootWithHash } from '../utils/appHref.js'
 import { publicAsset } from '../utils/publicAsset.js'
-import { useLocation } from 'react-router-dom'
-import { handleHomeHashNavClick } from '../utils/scrollToSection.js'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { navigateToHashSection } from '../utils/scrollToSection.js'
 
 export default function Hero() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
+  const navigate = useNavigate()
   const [nameGlitch, setNameGlitch] = useState(false)
   const coverSrc = `${import.meta.env.BASE_URL}${heroContent.coverImage.replace(/^\//, '')}`
 
   return (
     <section
       id="home"
-      className="divider-b relative flex min-h-[min(78svh,720px)] scroll-mt-24 items-stretch"
+      className="divider-b relative flex min-h-[min(78svh,720px)] items-stretch"
     >
       <div className="absolute inset-0 overflow-hidden" aria-hidden>
         <img
@@ -87,7 +88,7 @@ export default function Hero() {
           <LoadReveal className="flex flex-wrap gap-3 pt-2">
             <a
               href={appRootWithHash('work')}
-              onClick={(e) => handleHomeHashNavClick(e, appRootWithHash('work'), pathname)}
+              onClick={(e) => navigateToHashSection(e, 'work', pathname, navigate, hash)}
               className="card-elevated card-elevated-hover inline-flex items-center gap-2 rounded-full border border-amber-400/50 bg-amber-500/90 px-5 py-2.5 text-sm font-medium text-zinc-950 transition hover:border-amber-400/70 hover:bg-amber-400"
             >
               Explore
@@ -116,7 +117,7 @@ export default function Hero() {
             <a
               href={appRootWithHash('contact')}
               onClick={(e) =>
-                handleHomeHashNavClick(e, appRootWithHash('contact'), pathname)
+                navigateToHashSection(e, 'contact', pathname, navigate, hash)
               }
               className="card-elevated card-elevated-hover inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/90 px-5 py-2.5 text-sm text-zinc-800 transition hover:border-zinc-400 hover:bg-white dark:border-zinc-700/60 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
             >
