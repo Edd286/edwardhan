@@ -41,6 +41,8 @@ html.dark,
 
 html {
   scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scrollbar-width: thin;
   scrollbar-color: rgb(113 113 122 / 0.45) transparent;
 }

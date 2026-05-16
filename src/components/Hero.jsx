@@ -15,6 +15,10 @@ export default function Hero() {
   const [nameGlitch, setNameGlitch] = useState(false)
   const coverSrc = `${import.meta.env.BASE_URL}${heroContent.coverImage.replace(/^\//, '')}`
 
+  function scrollToSection(sectionId) {
+    return (e) => navigateToHashSection(e, sectionId, pathname, navigate, hash)
+  }
+
   return (
     <section
       id="home"
@@ -88,7 +92,7 @@ export default function Hero() {
           <LoadReveal className="flex flex-wrap gap-3 pt-2">
             <a
               href={appRootWithHash('work')}
-              onClick={(e) => navigateToHashSection(e, 'work', pathname, navigate, hash)}
+              onClick={scrollToSection('work')}
               className="card-elevated card-elevated-hover inline-flex items-center gap-2 rounded-full border border-amber-400/50 bg-amber-500/90 px-5 py-2.5 text-sm font-medium text-zinc-950 transition hover:border-amber-400/70 hover:bg-amber-400"
             >
               Explore
@@ -116,9 +120,7 @@ export default function Hero() {
             </a>
             <a
               href={appRootWithHash('contact')}
-              onClick={(e) =>
-                navigateToHashSection(e, 'contact', pathname, navigate, hash)
-              }
+              onClick={scrollToSection('contact')}
               className="card-elevated card-elevated-hover inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/90 px-5 py-2.5 text-sm text-zinc-800 transition hover:border-zinc-400 hover:bg-white dark:border-zinc-700/60 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:border-zinc-600 dark:hover:bg-zinc-900"
             >
               <Mail className="size-4 shrink-0" aria-hidden />

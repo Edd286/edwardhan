@@ -1,9 +1,17 @@
-/** Whether the current route is the home page (supports GitHub Pages base path). */
+/**
+ * Whether the current route is the home page.
+ * With `BrowserRouter` `basename`, `pathname` is relative (always `/` at home).
+ * Also accepts full paths when the base segment is still present (direct loads).
+ */
 export function isHomePath(pathname) {
-  const base = import.meta.env.BASE_URL.replace(/\/$/, '')
   const path = pathname.replace(/\/$/, '') || '/'
-  if (!base || base === '/') return path === '/' || path === ''
-  return path === base
+  if (path === '/' || path === '') return true
+
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+  if (!base || base === '/') return false
+
+  const baseSegment = base.replace(/^\//, '')
+  return path === baseSegment || path === `/${baseSegment}`
 }
 
 /** @returns {number} */
@@ -182,12 +190,17 @@ export async function navigateToHashSection(
 
     markHashScrollHandled()
     if (!hashMatches) {
-      navigate({ pathname: '/', hash }, { preventScrollReset: true, replace: true })
+      navigate({ pathname: homePathname(), hash }, { preventScrollReset: true, replace: true })
     }
     return
   }
 
-  navigate({ pathname: '/', hash }, { preventScrollReset: true })
+  navigate({ pathname: homePathname(), hash }, { preventScrollReset: true })
+}
+
+/** Home route path for `navigate()` (basename-relative). */
+export function homePathname() {
+  return '/'
 }
 
 /** @deprecated Use navigateToHashSection */

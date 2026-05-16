@@ -8,6 +8,10 @@ import { initScrollRestoration } from './utils/scrollToSection.js'
 
 initScrollRestoration()
 
+document.fonts?.ready?.then(() => {
+  document.documentElement.classList.add('fonts-ready')
+})
+
 const base = import.meta.env.BASE_URL
 const basename = base === '/' ? undefined : base.replace(/\/$/, '')
 
